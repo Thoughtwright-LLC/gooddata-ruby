@@ -229,9 +229,9 @@ module GoodData
 
         # kick the load
         pull = { 'pullIntegration' => File.basename(dir) }
-        link = project.md.links('etl')['pull']
-        task = GoodData.post link, pull
-        while (GoodData.get(task["pullTask"]["uri"])["taskStatus"] === "RUNNING" || GoodData.get(task["pullTask"]["uri"])["taskStatus"] === "PREPARED") do
+        link = project.md.links('etl')['pull2']
+        task = GoodData.post(link, pull, info_message: 'Starting the data load from user storage to dataset.')
+        while (GoodData.get(task['pull2Task']['links']['poll'])['wTaskStatus']['status'] === "RUNNING" || GoodData.get(task['pull2Task']['links']['poll'])['wTaskStatus']['status'] === "PREPARED") do
           sleep 30
         end
         puts "Done loading"
